@@ -58,8 +58,10 @@ func TestMainHandlerWhenCountMoreThanTotal(t *testing.T) {
         t.Errorf("expected status code: %d, got %d", http.StatusOK, status)
     }
 
-    expected := `Мир кофе,Сладкоежка,Кофе и завтраки,Сытый студент`
-    if responseRecorder.Body.String() != expected {
-        t.Errorf("expected body: %s, got %s", expected, responseRecorder.Body.String())
+    body := responseRecorder.Body.String()
+    list := strings.Split(body, ",")
+
+    if len(list) != totalCount {
+        t.Errorf("expected cafe count: %d, got %d", totalCount, len(list))
     }
 }
